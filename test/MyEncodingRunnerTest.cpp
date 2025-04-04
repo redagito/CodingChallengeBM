@@ -2,9 +2,20 @@
 #include <chrono>
 #include <gtest/gtest.h>
 
+template<typename T>
+void printEncodingTime(std::chrono::time_point<T> start, std::chrono::time_point<T> end)
+{
+	std::cout << "Encoding took "
+		<< std::chrono::duration_cast<std::chrono::seconds>(end -
+			start)
+		.count()
+		<< "s" << std::endl;
+}
+
 // NOTE testing mostly done via console output
 // For proper testing would need callbacks
 // or synchronized single-step solution
+// NOTE mark tasks as done and check completion
 TEST(MyEncodingRunnerTest, RunEncoding_Default) {
 	const auto startTime = std::chrono::steady_clock::now();
 
@@ -12,11 +23,7 @@ TEST(MyEncodingRunnerTest, RunEncoding_Default) {
 	runner.runEncoding(PREDEFINED_BITRATE_LADDER);
 
 	const auto endTime = std::chrono::steady_clock::now();
-	std::cout << "Encoding took "
-		<< std::chrono::duration_cast<std::chrono::seconds>(endTime -
-			startTime)
-		.count()
-		<< "s" << std::endl;
+	printEncodingTime(startTime, endTime);
 }
 
 TEST(MyEncodingRunnerTest, RunEncoding_NoTasks) {
@@ -26,11 +33,7 @@ TEST(MyEncodingRunnerTest, RunEncoding_NoTasks) {
 	runner.runEncoding({});
 
 	const auto endTime = std::chrono::steady_clock::now();
-	std::cout << "Encoding took "
-		<< std::chrono::duration_cast<std::chrono::seconds>(endTime -
-			startTime)
-		.count()
-		<< "s" << std::endl;
+	printEncodingTime(startTime, endTime);
 }
 
 TEST(MyEncodingRunnerTest, RunEncoding_NoCPU) {
@@ -40,11 +43,7 @@ TEST(MyEncodingRunnerTest, RunEncoding_NoCPU) {
 	runner.runEncoding(PREDEFINED_BITRATE_LADDER);
 
 	const auto endTime = std::chrono::steady_clock::now();
-	std::cout << "Encoding took "
-		<< std::chrono::duration_cast<std::chrono::seconds>(endTime -
-			startTime)
-		.count()
-		<< "s" << std::endl;
+	printEncodingTime(startTime, endTime);
 }
 
 TEST(MyEncodingRunnerTest, RunEncoding_NotEnoughCPU) {
@@ -54,11 +53,7 @@ TEST(MyEncodingRunnerTest, RunEncoding_NotEnoughCPU) {
 	runner.runEncoding(PREDEFINED_BITRATE_LADDER);
 
 	const auto endTime = std::chrono::steady_clock::now();
-	std::cout << "Encoding took "
-		<< std::chrono::duration_cast<std::chrono::seconds>(endTime -
-			startTime)
-		.count()
-		<< "s" << std::endl;
+	printEncodingTime(startTime, endTime);
 }
 
 TEST(MyEncodingRunnerTest, RunEncoding_LowCPU) {
@@ -68,16 +63,10 @@ TEST(MyEncodingRunnerTest, RunEncoding_LowCPU) {
 	runner.runEncoding(PREDEFINED_BITRATE_LADDER);
 
 	const auto endTime = std::chrono::steady_clock::now();
-	std::cout << "Encoding took "
-		<< std::chrono::duration_cast<std::chrono::seconds>(endTime -
-			startTime)
-		.count()
-		<< "s" << std::endl;
+	printEncodingTime(startTime, endTime);
 }
 
 TEST(MyEncodingRunnerTest, RunEncoding_InsufficientMem) {
-	const auto startTime = std::chrono::steady_clock::now();
-
 	MyEncodingRunner runner(4, 10);
 	EXPECT_ANY_THROW(runner.runEncoding(PREDEFINED_BITRATE_LADDER));
 }
@@ -89,11 +78,7 @@ TEST(MyEncodingRunnerTest, RunEncoding_LowMem) {
 	runner.runEncoding(PREDEFINED_BITRATE_LADDER);
 
 	const auto endTime = std::chrono::steady_clock::now();
-	std::cout << "Encoding took "
-		<< std::chrono::duration_cast<std::chrono::seconds>(endTime -
-			startTime)
-		.count()
-		<< "s" << std::endl;
+	printEncodingTime(startTime, endTime);
 }
 
 TEST(MyEncodingRunnerTest, RunEncoding_HighCPUMedMem) {
@@ -103,11 +88,7 @@ TEST(MyEncodingRunnerTest, RunEncoding_HighCPUMedMem) {
 	runner.runEncoding(PREDEFINED_BITRATE_LADDER);
 
 	const auto endTime = std::chrono::steady_clock::now();
-	std::cout << "Encoding took "
-		<< std::chrono::duration_cast<std::chrono::seconds>(endTime -
-			startTime)
-		.count()
-		<< "s" << std::endl;
+	printEncodingTime(startTime, endTime);
 }
 
 TEST(MyEncodingRunnerTest, RunEncoding_HighCPUHighMem) {
@@ -117,11 +98,7 @@ TEST(MyEncodingRunnerTest, RunEncoding_HighCPUHighMem) {
 	runner.runEncoding(PREDEFINED_BITRATE_LADDER);
 
 	const auto endTime = std::chrono::steady_clock::now();
-	std::cout << "Encoding took "
-		<< std::chrono::duration_cast<std::chrono::seconds>(endTime -
-			startTime)
-		.count()
-		<< "s" << std::endl;
+	printEncodingTime(startTime, endTime);
 }
 
 TEST(MyEncodingRunnerTest, RunEncoding_ExtremeCPUHighMem) {
@@ -131,11 +108,7 @@ TEST(MyEncodingRunnerTest, RunEncoding_ExtremeCPUHighMem) {
 	runner.runEncoding(PREDEFINED_BITRATE_LADDER);
 
 	const auto endTime = std::chrono::steady_clock::now();
-	std::cout << "Encoding took "
-		<< std::chrono::duration_cast<std::chrono::seconds>(endTime -
-			startTime)
-		.count()
-		<< "s" << std::endl;
+	printEncodingTime(startTime, endTime);
 }
 
 TEST(MyEncodingRunnerTest, RunEncoding_ExtremeCPULowMem) {
@@ -145,9 +118,21 @@ TEST(MyEncodingRunnerTest, RunEncoding_ExtremeCPULowMem) {
 	runner.runEncoding(PREDEFINED_BITRATE_LADDER);
 
 	const auto endTime = std::chrono::steady_clock::now();
-	std::cout << "Encoding took "
-		<< std::chrono::duration_cast<std::chrono::seconds>(endTime -
-			startTime)
-		.count()
-		<< "s" << std::endl;
+	printEncodingTime(startTime, endTime);
+}
+
+// Basically stresstest
+TEST(MyEncodingRunnerTest, RunEncoding_ExtremeCPUExtremeMem_HighTaskCount) {
+	const auto startTime = std::chrono::steady_clock::now();
+
+	MyEncodingRunner runner(512, 16000);
+
+	BitrateLadder ladder;
+	for (int i = 0; i < 10; ++i)
+		ladder.insert(ladder.end(), PREDEFINED_BITRATE_LADDER.begin(), PREDEFINED_BITRATE_LADDER.end());
+	
+	runner.runEncoding(ladder);
+
+	const auto endTime = std::chrono::steady_clock::now();
+	printEncodingTime(startTime, endTime);
 }

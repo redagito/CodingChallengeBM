@@ -14,6 +14,8 @@ struct Rendition {
   int fps{};
 };
 
+constexpr int VCPUS_USED_PER_ENCODING = 2;
+
 static std::ostream &operator<<(std::ostream &stream,
                                 const Rendition &rendition) {
   stream << "(" << rendition.resolution.width << "x"

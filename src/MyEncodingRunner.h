@@ -15,6 +15,7 @@ public:
 
 	int getMemoryAvailableKB();
 
+private:
 	std::vector<std::thread> threads;
 
 	// locks everything but "threads"
