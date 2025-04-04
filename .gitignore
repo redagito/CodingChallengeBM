@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# In-source build
+build/
+
+# Task description - probably should not put this on public github
+*.pdf
